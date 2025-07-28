@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Youtube URL</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/">
+        <h1>Random Youtube Video</h1>
+      </a>
+    </header>
+    <main>
+      <div class="center">
+        <button class="gen">
+          <img class="icon" src="images/yt.png" alt="Icon" />
+        </button>
+      </div>
+    </main>
+
+    <footer>
+      <p>made with ❤️ by sexyplankton</p>
+    </footer>
+
+    <script type="module">
+      import { nanoid } from "https://esm.sh/nanoid";
+      let random = "";
+      let isValid;
+
+      const button = document.querySelector(".gen");
+
+      const checkURL = async (random) => {
+        const url = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${random}`;
+
+        try {
+          const response = await fetch(url);
+          return response.ok;
+        } catch {
+          return false;
+        }
+      };
+
+      button.addEventListener("click", async () => {
+        console.log("starting");
+        do {
+          random = nanoid(11);
+          isValid = await checkURL(random);
+        } while (!isValid);
+
+        window.location.href = `https://www.youtube.com/watch?v=${random}`;
+      });
+    </script>
+  </body>
+</html>
++
